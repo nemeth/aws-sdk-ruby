@@ -99,6 +99,15 @@ module Aws
         end
 
         def require_credentials(context)
+          puts "----------- ENV -----------"
+          ENV.each{|k,v| puts "#{k}=#{v}"}
+          puts "----------- CredentialProviderChain -----------"
+          p Aws::CredentialProviderChain.new.resolve
+          puts "----------- context.config -----------"
+          p context.config
+          puts "-------------- caller ----------------"
+          caller.each { |m| puts m}
+          puts "--------------------------------------"
           if missing_credentials?(context)
             msg = 'unable to sign request without credentials set'
             raise Errors::MissingCredentialsError, msg
